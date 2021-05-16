@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="data:;base64,=">
+
+    </head>
+    <body>
+        <h1>User on this page </h1>
+        <div id="users"></div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            var socket = io('http://localhost:5000');
+            socket.on('user.add',function(id){
+                $('#users').prepend(`<p id="${id}"> ${id}</p>`)
+            })
+
+            socket.on('users.remove',function(id){
+                $('#${id}').remove();
+            });
+        </script>
+    </body>
+</html>

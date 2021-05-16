@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1 id='user-count'>?</h1>
+        <p>Active Users on this Page</p>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io("http://localhost:5000");
+            socket.on('users.count', function (number) 
+            { 
+                document.getElementById('user-count').innerHTML =number            });
+        </script>
+    </body>
+</html>

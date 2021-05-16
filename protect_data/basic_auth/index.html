@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
+        <link rel="icon" href="data:;base64,=">
+
+    </head>
+    <body>
+        <div class="container" id="main-contianer"></div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            var socket = io("http://localhost:5000")
+            function renderTemplate (tpl) {
+                document.getElementById('main-container').innerHTML = 
+               tpl;
+               }
+
+               function userLoggedIn (data) {
+                localStorage.token = data.token;
+                renderTemplate(getProfileTemplate(data.profile));
+                profileController(data);
+               }
+
+               
+        </script>
+    </body>
+</html>

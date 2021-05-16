@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
+        <link rel="icon" href="data:;base64,=">        
+
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>My Rooms</h1>
+            <ul id ="#messages"></ul>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            var socket = io('http://localhost:5000'); 
+            socket.on('list.rooms.response', function (rooms) {
+                $('#messages').html('');
+                rooms.forEach(function (room) {
+                $('#messages').append(`<li>${room} | <a href="#" 
+               data-id="${room}">leave</a></li>`);
+                });
+               });
+
+               $(function () {
+                socket.emit('list.rooms');
+                $('#messages').delegate('a', 'click', function () {
+                socket.emit('leave.room', $(this).data('id'));
+                // Since we are already listing the rooms initially 
+               //with
+                // this message, we can do reuse it to kick off the
+                // listing response message.
+                socket.emit('list.rooms');
+                });
+               });
+        </script>
+    </body>
+</html>

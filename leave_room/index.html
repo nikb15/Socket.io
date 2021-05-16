@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">    
+        <link rel="icon" href="data:;base64,=">        
+    </head>
+    <body>
+        <div clas="container">
+            <hr/>
+            <input type="checkbox" id="toggle">Get notificaitons
+            <hr/>
+            <ul id="messages"></ul>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            var socket = io('http://localhost:5000'); 
+            socket.on('notify',function(messages){
+                console.log(messages);
+                $('#messages').prepend(`<li> ${messages}</li>`);
+            });
+        
+            $(function(){
+                $('#toggle').on('click',function(){
+                    var checked=$(this).is(':checked'),
+                    action=(checked)?'join':'leave';
+                    socket.emit(`notifications.${action}`);
+                })
+            })
+        </script>
+    </body>
+</html>
